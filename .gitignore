@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+/bin/
+/nodeScripts/
+/files/imageDescriptions/*
+/files/images/*
+/files/logs/*
+/files/thumbs/*
