@@ -16,7 +16,11 @@ import org.json.simple.parser.ParseException;
 
 public class FileHelper {
 	
-	public static JSONObject getJSONObject (String filePath) {
+	/**
+	 * @param filePath (String)
+	 * @return JSONObject
+	 */
+	public static JSONObject getJsonFromFile (String filePath) {
 		try {
 			Scanner scanner = new Scanner(new File(filePath));
 			StringBuilder sb = new StringBuilder();
@@ -36,24 +40,11 @@ public class FileHelper {
 		return null;
 	}
 	
-	public static JSONObject readFromFile (String filePath) {
-		try {
-			Scanner scanner = new Scanner(new File(filePath));
-			StringBuilder sb = new StringBuilder();
-			while (scanner.hasNextLine()) {
-				sb.append(scanner.next());
-			}
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObj = (JSONObject) jsonParser.parse(sb.toString());
-			return jsonObj;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
+	/**
+	 * Write buffered image to file (.png)
+	 * @param img (BufferedImage)
+	 * @param filePath (String)
+	 */
 	public static void writeImage (BufferedImage img, String filePath) {
 		try {
 		    ImageIO.write(img, "png", new File(filePath + ".png"));
@@ -63,6 +54,11 @@ public class FileHelper {
 		}
 	}
 	
+	/**
+	 * Write json to file
+	 * @param popObj (JSONObject)
+	 * @return
+	 */
 	public static String printModelToFile (JSONObject popObj) {
 		String fileName = new Date().getTime() + "";
 		FileWriter fw = null;

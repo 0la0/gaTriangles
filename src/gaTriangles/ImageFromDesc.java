@@ -7,13 +7,9 @@ import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 
 public class ImageFromDesc {

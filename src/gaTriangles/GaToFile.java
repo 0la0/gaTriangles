@@ -120,7 +120,7 @@ public class GaToFile {
 	
 	private void renderImage (JSONObject jsonPopulation) {
 		String thumbDescPath = "./files/imageDescriptions/thumbs.json";
-		JSONObject thumbData = FileHelper.getJSONObject(thumbDescPath);
+		JSONObject thumbData = FileHelper.getJsonFromFile(thumbDescPath);
 		ImageFormat imgFormat = new ImageFormat(thumbData);
 		
 		GenerationsNormal gensNormal = new GenerationsNormal(jsonPopulation);

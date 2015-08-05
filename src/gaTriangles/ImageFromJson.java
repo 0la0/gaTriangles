@@ -11,24 +11,16 @@ import org.json.simple.JSONObject;
 public class ImageFromJson {
 
 	public ImageFromJson (String filePath, boolean isRender) {
-		JSONObject imgData = FileHelper.getJSONObject(filePath);
+		JSONObject imgData = FileHelper.getJsonFromFile(filePath);
 		ImageFormat imgFormat = new ImageFormat(imgData);
 		
-		JSONObject jsonGenerations = FileHelper.readFromFile(imgFormat.filePath);
+		JSONObject jsonGenerations = FileHelper.getJsonFromFile(imgFormat.filePath);
 		GenerationsNormal gensNormal = new GenerationsNormal(jsonGenerations);
 	
 		ImageFromDesc imgDesc = new ImageFromDesc(gensNormal, imgFormat);
 		
 		int userChoice;
 		userChoice = isRender ? 0 : JOptionPane.showConfirmDialog(new JFrame(), "Save Image?", "Do Not Save", JOptionPane.YES_NO_OPTION);
-		
-//		if (isRender) {
-//			userChoice = 0;
-//		}
-//		else {
-//			userChoice = JOptionPane.showConfirmDialog(new JFrame(), "Save Image?", "Do Not Save", JOptionPane.YES_NO_OPTION);
-//		}
-	
 		if (userChoice == 0) {
 			this.renderImage(imgDesc.getImage());
 		}
