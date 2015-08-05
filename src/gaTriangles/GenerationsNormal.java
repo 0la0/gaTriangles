@@ -14,7 +14,6 @@ public class GenerationsNormal {
 	public GenerationsNormal () {}
 	
 	public GenerationsNormal (JSONObject parentObj) {
-		//GenerationsNormal gens = new GenerationsNormal();
 		JSONArray jsonGenerations = (JSONArray) parentObj.get("data");
 		
 		this.populations = (List<PopulationNormal>) jsonGenerations.stream().map(jsonGeneration -> {

@@ -53,9 +53,9 @@ public class GaToFile {
 	
 	private void showImageAndDialog () {
 		JSONObject jsonPopulations = this.getJsonRepresentation();
-		this.getThumbNailConfig(jsonPopulations);
+		this.renderImage(jsonPopulations);
 		
-		int userChoice = JOptionPane.showConfirmDialog(new JFrame(), "Save Model", "Do Not Save Model", JOptionPane.YES_NO_OPTION);
+		int userChoice = JOptionPane.showConfirmDialog(new JFrame(), "Save Model and Thumbnail?", "Do Not Save", JOptionPane.YES_NO_OPTION);
 		if (userChoice == 0) {
 			String fileName = FileHelper.printModelToFile(jsonPopulations);
 			String thumbFilePath = "./files/thumbs/" + fileName;
@@ -118,7 +118,7 @@ public class GaToFile {
 		return goal;
 	}
 	
-	private void getThumbNailConfig (JSONObject jsonPopulation) {
+	private void renderImage (JSONObject jsonPopulation) {
 		String thumbDescPath = "./files/imageDescriptions/thumbs.json";
 		JSONObject thumbData = FileHelper.getJSONObject(thumbDescPath);
 		ImageFormat imgFormat = new ImageFormat(thumbData);
