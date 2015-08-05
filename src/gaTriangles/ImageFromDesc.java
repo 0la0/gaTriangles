@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONObject;
-
 
 public class ImageFromDesc {
 
@@ -23,14 +21,31 @@ public class ImageFromDesc {
 	private int triCnt = 0;
 	private BufferedImage img;
 	
+	private double virtualHeight;
+	private double verticalBuffer;
+	private double virtualWidth;
+	private double horizontalBuffer;
 	
 	
 	public ImageFromDesc (GenerationsNormal generations, ImageFormat imgFormat) {
 		this.generations = generations;
 		this.imgFormat = imgFormat;
+		this.calcImageDims();
 		
 		this.img = getTriangleBufferedImage();
 		new ImageDisplay(this.imgFormat.displayWidth, this.imgFormat.displayHeight, this.img);
+	}
+	
+	private void calcImageDims () {
+		int height = this.imgFormat.bufferedImgHeight;
+		virtualHeight = this.imgFormat.vertScale * height;
+		double virtualHeightRatio = 1 - (virtualHeight / (height * 1.0));
+		verticalBuffer = (virtualHeightRatio * height) / 2.0;
+		
+		int width = this.imgFormat.bufferedImgWidth;
+		virtualWidth = this.imgFormat.horizScale * width;
+		double virtualWidthRatio = 1 - (virtualWidth / (width * 1.0));
+		horizontalBuffer = (virtualWidthRatio * width) / 2.0;
 	}
 	
 	public BufferedImage getTriangleBufferedImage () {
@@ -72,26 +87,14 @@ public class ImageFromDesc {
 		return img;
 	}
 	
-
-	//cache virtualHeight and buffer at init
 	private double getVerticalMapping (Double vertGene) {
-		int height = this.imgFormat.bufferedImgHeight;
-		double virtualHeight = this.imgFormat.vertScale * height;
-		double vToRealRatio = 1 - (virtualHeight / (height * 1.0));
-		double buffer = (vToRealRatio * height) / 2.0;
-		double ty = (virtualHeight * vertGene) + buffer;
+		double ty = (virtualHeight * vertGene) + verticalBuffer;
 		return ty;
 	}
 	
-	//cache virtualHeight and buffer at init
 	private double getHorizontalMapping (int generationNum) {
-		int width = this.imgFormat.bufferedImgWidth;
-		double virtualWidth = this.imgFormat.horizScale * width;
-		double vToRealRatio = 1 - (virtualWidth / (width * 1.0));
-		double buffer = (vToRealRatio * width) / 2.0;
-		
 		double generationPercent = generationNum / (this.generations.populations.size() * 1.0);
-		double tx = (generationPercent * virtualWidth) + buffer;
+		double tx = (generationPercent * virtualWidth) + horizontalBuffer;
 		return tx;
 	}
 	
