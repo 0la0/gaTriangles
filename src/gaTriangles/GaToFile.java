@@ -27,12 +27,12 @@ public class GaToFile {
 	private GaGenerator gaGenerator;
 	private ImageFromDesc imgDisplay;
 	private float mutateThresh = 0.0009f;
-	private double ub = 0.95;
-	private double lb = 0.87;
+	private double fitnessUpperBound = 0.95;
+	private double fitnessLowerBound = 0.87;
 	private int goalChangeCnt = 0;
 	
 	public GaToFile () {
-		
+		//configure genetic algorithm
 		this.gaConfigOptions = new GaConfigOptions();
 		this.gaConfigOptions.numGenes = 8;
 		this.gaConfigOptions.populationSize = 40;
@@ -45,10 +45,13 @@ public class GaToFile {
 		this.gaConfigOptions.breederObj = new BreedStandard();
 		this.gaConfigOptions.probabilityObj = new ProbabilityStandard();
  		
+		//run algorithm and show results
  		this.gaGenerator = new GaGenerator(this.gaConfigOptions);
-		
-		this.run();
-
+		this.runGeneticAlgorithm();
+		this.showImageAndDialog();
+	}
+	
+	private void showImageAndDialog () {
 		JSONObject jsonPopulations = this.getJsonRepresentation();
 		this.getThumbNailConfig(jsonPopulations);
 		
@@ -62,8 +65,14 @@ public class GaToFile {
 		System.exit(0);
 	}
 	
-	
-	public void run () {
+	/**
+	 * Main algorithm:
+	 * 	-Step1: start regular genetic algorithm with arbitrary goal
+	 *  -Step2: when gene[0] makes a predetermined fitness level (fitnessUpperBound)
+	 *   increase mutation until fitnessLowerBound is reached
+	 *  -Step3: repeat step2 for a set number of iterations 
+	 */
+	public void runGeneticAlgorithm () {
 		int cnt = 0;
 
 		boolean isDecreasing = true;
@@ -76,15 +85,14 @@ public class GaToFile {
 			double geneFitness = ((FitnessCustomGoal) this.gaConfigOptions.fitnessObj).getGeneFitness(latestPopulation, 0);
 			double ema = expAvg.getAvg(geneFitness);
 			
-			//System.out.println("geneFitness: " + geneFitness);
 			if (isDecreasing) {
-				if (ema > this.ub) {
+				if (ema > this.fitnessUpperBound) {
 					isDecreasing = false;
 					System.out.println("start increase at index: " + cnt);
 				}
 			}
 			else {
-				if (ema < this.lb) {
+				if (ema < this.fitnessLowerBound) {
 					System.out.println("generating new goal at index: " + cnt);
 					this.goalChangeCnt++;
 					generateNewGoal();
@@ -124,7 +132,8 @@ public class GaToFile {
 		JSONArray populations = new JSONArray();
 		
 		gaGenerator.getGenerations().getPopulations().forEach(population -> {
-			//System.out.println("population");
+			
+			//TODO: map list to JSONArray
 			JSONArray pop = new JSONArray();
 			population.getIndividuals().forEach(individual -> {
 				List<Double> genome = individual.getGenome().stream().map(gene -> {
@@ -146,8 +155,8 @@ public class GaToFile {
 		metaData.put("populationSize", this.gaConfigOptions.populationSize);
 		metaData.put("numGenerations", this.gaConfigOptions.numGenerations);
 		metaData.put("geneLength", this.gaConfigOptions.geneLength);
-		metaData.put("fitnessLowerBound", this.lb);
-		metaData.put("fitnessUpperBound", this.ub);
+		metaData.put("fitnessLowerBound", this.fitnessLowerBound);
+		metaData.put("fitnessUpperBound", this.fitnessUpperBound);
 		metaData.put("goalChangeCnt", this.goalChangeCnt);
 		
 		JSONObject popObj = new JSONObject();

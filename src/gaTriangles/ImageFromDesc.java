@@ -32,7 +32,7 @@ public class ImageFromDesc {
 		this.imgFormat = imgFormat;
 		this.calcImageDims();
 		
-		this.img = getTriangleBufferedImage();
+		this.img = createImage();
 		new ImageDisplay(this.imgFormat.displayWidth, this.imgFormat.displayHeight, this.img);
 	}
 	
@@ -48,12 +48,11 @@ public class ImageFromDesc {
 		horizontalBuffer = (virtualWidthRatio * width) / 2.0;
 	}
 	
-	public BufferedImage getTriangleBufferedImage () {
+	public BufferedImage createImage () {
 		int w = this.imgFormat.bufferedImgWidth;
 		int h = this.imgFormat.bufferedImgHeight;
 		
 		BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		//Graphics2D g = img.createGraphics();
 		g = img.createGraphics();
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setColor(Color.WHITE);
@@ -88,14 +87,12 @@ public class ImageFromDesc {
 	}
 	
 	private double getVerticalMapping (Double vertGene) {
-		double ty = (virtualHeight * vertGene) + verticalBuffer;
-		return ty;
+		return (virtualHeight * vertGene) + verticalBuffer;
 	}
 	
 	private double getHorizontalMapping (int generationNum) {
 		double generationPercent = generationNum / (this.generations.populations.size() * 1.0);
-		double tx = (generationPercent * virtualWidth) + horizontalBuffer;
-		return tx;
+		return (generationPercent * virtualWidth) + horizontalBuffer;
 	}
 	
 	private void mapIndividualToTri (IndividualNormal individual, int genNum) {
@@ -121,7 +118,6 @@ public class ImageFromDesc {
 	}
 	
 	private void printTriangle (double tx, double ty, double sx, double sy, double theta) {
-		
 		int[] xPoints = new int[]{0, 1, 2};
 		int[] yPoints = new int[]{0, 1, 0};
 		
@@ -129,7 +125,6 @@ public class ImageFromDesc {
 		double invSy = 1 / sy;
 
 		Polygon tri = new Polygon(xPoints, yPoints, xPoints.length);
-		
 		g.scale(sx, sy);
 		g.translate(tx * invSx, ty * invSy);
 		g.rotate(theta);
