@@ -3,7 +3,17 @@
 .settings
 /bin/
 /nodeScripts/
+
 /files/imageDescriptions/*
+!/files/imageDescriptions/_regularImage.json
+
 /files/images/*
+!/files/images/1438793585183.png
+
 /files/logs/*
+
+/files/models/*
+!/files/models/1435529169270.json
+
 /files/thumbs/*
+!/files/thumbs/1435529169270.png
