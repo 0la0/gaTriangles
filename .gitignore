@@ -6,6 +6,7 @@
 
 /files/imageDescriptions/*
 !/files/imageDescriptions/_regularImage.json
+!/files/imageDescriptions/thumbs.json
 
 /files/images/*
 !/files/images/1438793585183.png
