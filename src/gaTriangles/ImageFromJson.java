@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
 
+//TODO: organize config files and have a basic presentation
 public class ImageFromJson {
 
 	public ImageFromJson (String filePath, boolean isRender) {
@@ -19,8 +20,7 @@ public class ImageFromJson {
 	
 		ImageFromDesc imgDesc = new ImageFromDesc(gensNormal, imgFormat);
 		
-		int userChoice;
-		userChoice = isRender ? 0 : JOptionPane.showConfirmDialog(new JFrame(), "Save Image?", "Do Not Save", JOptionPane.YES_NO_OPTION);
+		int userChoice = isRender ? 0 : JOptionPane.showConfirmDialog(new JFrame(), "Save Image?", "Do Not Save", JOptionPane.YES_NO_OPTION);
 		if (userChoice == 0) {
 			this.renderImage(imgDesc.getImage());
 		}
@@ -40,7 +40,7 @@ public class ImageFromJson {
 		String basePath = "./files/imageDescriptions/";
 		StringBuilder filePath = new StringBuilder(basePath);
 		if (args.length == 0) {
-			filePath.append("test3.json");
+			filePath.append("img2.json");
 			new ImageFromJson(filePath.toString(), false);
 		}
 		else if (args.length == 1) {

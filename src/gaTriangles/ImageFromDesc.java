@@ -104,8 +104,8 @@ public class ImageFromDesc {
 		
 		double tx = this.getHorizontalMapping(genNum);
 		double ty = this.getVerticalMapping(genome.get(0));
-		double sx = Math.pow(this.imgFormat.scaleMult * genome.get(1), 1.5); // include exp in JSON
-		double sy = Math.pow(this.imgFormat.scaleMult * genome.get(2), 1.5); // include exp in JSON
+		double sx = Math.pow(this.imgFormat.scaleMult * genome.get(1), this.imgFormat.scaleExp); 
+		double sy = Math.pow(this.imgFormat.scaleMult * genome.get(2), this.imgFormat.scaleExp); 
 		double theta = 2 * Math.PI * genome.get(3);
 		
 		int colorR = (int) Math.floor( 255 * genome.get(4) );

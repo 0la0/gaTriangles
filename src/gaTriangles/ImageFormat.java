@@ -22,6 +22,7 @@ public class ImageFormat {
 	public int widthToScale;
 	public double vertScale;
 	public double horizScale;
+	public double scaleExp;
 	
 	public ImageFormat () {
 		this.setScale();
@@ -54,6 +55,7 @@ public class ImageFormat {
 		sb.append(String.format("widthToScale: \t %d \n", this.widthToScale));
 		sb.append(String.format("vertScale: \t %f \n", this.vertScale));
 		sb.append(String.format("horizScale: \t %f \n", this.horizScale));
+		sb.append(String.format("scaleExp: \t %f \n", this.scaleExp));
 		return sb.toString();
 	}
 	
