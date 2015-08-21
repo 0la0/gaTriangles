@@ -13,5 +13,6 @@
 	"alpha": 20,
 	"alphaJitter": 25,
 	"widthToScale": 160,
-	"vertScale": 1.0
+	"vertScale": 1.0,
+	"scaleExp": 1.3
 }
