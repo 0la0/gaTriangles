@@ -118,8 +118,8 @@ public class ImageFromDesc {
 	}
 	
 	private void printTriangle (double tx, double ty, double sx, double sy, double theta) {
-		int[] xPoints = new int[]{0, 1, 2};
-		int[] yPoints = new int[]{0, 1, 0};
+		int[] xPoints = new int[]{0, 2, 4};
+		int[] yPoints = new int[]{0, 2, 0};
 		
 		double invSx = 1 / sx;
 		double invSy = 1 / sy;
