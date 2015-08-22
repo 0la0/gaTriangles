@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 public class GitHelper {
 	
 	String imgDescPath = "./files/imageDescriptions/";
-	String modelPath = "./files/models/";
+	String modelPath = "/files/models/";
 	String[] ignoreList = new String[] {
 			".classpath",
 			".project",
@@ -41,6 +41,9 @@ public class GitHelper {
 					String filePath = imgDescPath + fileName;
 					JSONObject imgDescObj = FileHelper.getJsonFromFile(filePath);
 					String modelPath = (String) imgDescObj.get("filePath");
+					if (modelPath.length() > 1) {
+						modelPath = modelPath.substring(1, modelPath.length() - 1);
+					}
 					return "!" + modelPath;
 				})
 				.filter(modelPath -> !modelPath.equals("!"))
