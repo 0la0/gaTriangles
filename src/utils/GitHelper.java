@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.json.simple.JSONObject;
@@ -36,7 +36,7 @@ public class GitHelper {
 		String [] fileList = new File(imgDescPath).list();
 		
 		//collect file paths for all models used by img config files
-		List<String> modelList = Arrays.stream(fileList)
+		Set<String> modelList = Arrays.stream(fileList)
 				.map(fileName -> {
 					String filePath = imgDescPath + fileName;
 					JSONObject imgDescObj = FileHelper.getJsonFromFile(filePath);
@@ -47,7 +47,7 @@ public class GitHelper {
 					return "!" + modelPath;
 				})
 				.filter(modelPath -> !modelPath.equals("!"))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 		
 		//write .gitignore
 		PrintWriter pw = null;
