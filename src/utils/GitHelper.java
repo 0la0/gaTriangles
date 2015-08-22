@@ -42,7 +42,7 @@ public class GitHelper {
 					JSONObject imgDescObj = FileHelper.getJsonFromFile(filePath);
 					String modelPath = (String) imgDescObj.get("filePath");
 					if (modelPath.length() > 1) {
-						modelPath = modelPath.substring(1, modelPath.length() - 1);
+						modelPath = modelPath.substring(1, modelPath.length());
 					}
 					return "!" + modelPath;
 				})
