@@ -4,15 +4,15 @@
 	"bufferedImgHeight": 3000,
 	"displayWidth": 1200,
 	"displayHeight": 600,
-	"startIndex": 375,
-	"endIndex": 1187,
+	"startIndex": 2092,
+	"endIndex": 2595,
 	"renderThresh": 1.0,
 	"xPosMult": 0.5,
-	"horizScale": 0.7,
+	"horizScale": 0.84,
 	"scaleMult": 1,
 	"alpha": 5,
 	"alphaJitter": 25,
 	"widthToScale": 160,
-	"vertScale": 0.4,
-	"scaleExp": 1.5
+	"vertScale": 0.53,
+	"scaleExp": 1.45
 }
