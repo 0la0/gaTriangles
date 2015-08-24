@@ -35,20 +35,13 @@ public class ImageFromJson {
 		System.out.println("image written: " + imgFilePath);
 	}
 	
-	//TODO: optional render flag
 	public static void main (String[] args) {
 		String basePath = "./files/imageDescriptions/";
-		StringBuilder filePath = new StringBuilder(basePath);
-		if (args.length == 0) {
-			filePath.append("img2.json");
-			new ImageFromJson(filePath.toString(), false);
-		}
-		else if (args.length == 1) {
-			filePath.append(args[0]);
-			new ImageFromJson(filePath.toString(), false);
+		if (args.length >= 1) {
+			new ImageFromJson(basePath + args[0], false);
 		}
 		else {
-			System.out.println("Usage: ImageFromJson [fileDescription.json]");
+			System.out.println("Usage: ImageFromJson imageDescription.json");
 		}
 	}
 }
