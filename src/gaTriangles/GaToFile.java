@@ -20,7 +20,9 @@ import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
+/*
+ * Run the algorithm and write model and thumbnail to file
+ */
 public class GaToFile {
 
 	private GaConfigOptions gaConfigOptions;
@@ -67,10 +69,11 @@ public class GaToFile {
 	
 	/**
 	 * Main algorithm:
-	 * 	-Step1: start regular genetic algorithm with arbitrary goal
-	 *  -Step2: when gene[0] makes a predetermined fitness level (fitnessUpperBound)
-	 *   increase mutation until fitnessLowerBound is reached
-	 *  -Step3: repeat step2 for a set number of iterations 
+	 *  For a predetermined number of iterations, do:
+	 *    -Step1: generate an arbitrary goal state
+	 *    -Step2: when gene[0] makes a predetermined fitness level (fitnessUpperBound)
+	 *            increase mutation until fitnessLowerBound is reached
+	 *    -Step3: go to step1
 	 */
 	public void runGeneticAlgorithm () {
 		int cnt = 0;

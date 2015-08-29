@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 
 import org.json.simple.JSONObject;
 
+/*
+ * Class to gather all models referenced from the imageDescriptions directory
+ * and allow them to be seen by git
+ */
 public class GitHelper {
 	
 	String imgDescPath = "./files/imageDescriptions/";

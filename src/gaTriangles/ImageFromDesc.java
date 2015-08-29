@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-
+/*
+ * Class to create buffered image from a model
+ */
 public class ImageFromDesc {
 
 	private AffineTransform canvasIdentity;

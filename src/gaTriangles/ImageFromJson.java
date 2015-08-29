@@ -8,7 +8,9 @@ import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
 
-//TODO: organize config files and have a basic presentation
+/*
+ * Given a model, render and save an image
+ */
 public class ImageFromJson {
 
 	public ImageFromJson (String filePath, boolean isRender) {
