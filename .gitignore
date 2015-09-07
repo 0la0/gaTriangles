@@ -15,6 +15,7 @@
 
 
 /files/models/*
+!/files/models/1440122270091.json
 !/files/models/1439428199407.json
 !/files/models/1440123844716.json
 !/files/models/1440122390815.json
