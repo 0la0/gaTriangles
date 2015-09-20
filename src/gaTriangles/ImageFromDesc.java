@@ -115,6 +115,18 @@ public class ImageFromDesc {
 		int colorB = (int) Math.floor( 255 * genome.get(6) ); 
 		int colorA = (int) Math.floor(  this.imgFormat.alpha * genome.get(7) );
 
+		if (colorR < 0) colorR = 0;
+		if (colorR > 255) colorR = 255;
+		if (colorG < 0) colorG = 0;
+		if (colorG > 255) colorG = 255;
+		if (colorB < 0) colorB = 0;
+		if (colorB > 255) colorB = 255;
+		if (colorA < 0) colorA = 0;
+		if (colorA > 255) colorA = 255;
+		
+		if (sx < 0) sx = 0;
+		if (sy < 0) sy = 0;
+		
 		g.setColor(new Color(colorR, colorG, colorB, colorA));
 		printTriangle(tx, ty, sx, sy, theta);
 	}
