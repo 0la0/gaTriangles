@@ -18,11 +18,12 @@ import pso.PsoConfigOptions;
 
 public class PsoToFile {
 	
-	private FitnessDistance fitnessFunction;
-	private int numPopulations = 1;
-	private int populationSize = 20;
-	private int numDimensions = 7;
+	//private FitnessDistance fitnessFunction;
+	private int numPopulations = 4;
+	private int populationSize = 8;
+	private int numDimensions = 8;
 	private ArrayList<TempPsoPopulation> populations = new ArrayList<TempPsoPopulation>();
+	private ArrayList<Population> activePopulations = new ArrayList<Population>();
 	private int size = 1000;
 	private ImageFromDesc imgDisplay;
 	
@@ -31,46 +32,44 @@ public class PsoToFile {
 		Position size = new Position(new int[]{
 			this.size, this.size, this.size, 
 			this.size, this.size, this.size,
-			this.size, this.size, this.size
+			this.size, this.size
 		});
-		this.fitnessFunction = new FitnessDistance();
-		this.fitnessFunction.setGoal(this.generateNewGoal());
 		
 		//---POPULATION SETUP---//
-		//for (int i = 0; i < this.numPopulations; i++) {
+		for (int i = 0; i < this.numPopulations; i++) {
 			PsoConfigOptions options = new PsoConfigOptions();
 			options.c1 = 0.006f;
 			options.c2 = 0.001f;
 			options.speedLimit = 25;
+			FitnessDistance fitnessFunction = new FitnessDistance();
+			fitnessFunction.setGoal(this.generateNewGoal());
+			//this.fitnessFunction.setGoal(this.generateNewGoal());
 			Population p = new Population(size, this.populationSize, fitnessFunction, options);
 			options.population = p;
-			//this.opts.add(options);
-			//this.populations.add(p);
-		//}
+			this.activePopulations.add(p);
+		}
 		
-		this.runAlgorithm(p);
+		this.runAlgorithm();
 		this.showImageAndDialog();
 	}
 	
 	//TODO: play around with the coefficients!
-	public void runAlgorithm (Population population) {
-		//this.populations.add(population)
+	public void runAlgorithm () {
 		
 		for (int i = 0; i < 4000; i++) {
-			population.update();
-			TempPsoPopulation tpp = new TempPsoPopulation(population.getParticles());
-			this.populations.add(tpp);
 			
-			if (this.fitnessFunction.getDimensionFitness(population, 0) < 30) {
-				System.out.println("new goal at index " + i);
-				this.fitnessFunction.setGoal(this.generateNewGoal());
-				population.scatter();
-			}
+			this.populations.add(new TempPsoPopulation(this.activePopulations));
 			
-			if (Math.random() < 0.01) {
-				population.scatter();
-			}
-
+			this.activePopulations.stream().forEach(population -> {
+				population.update();
+				
+				if (population.getDimensionFitness(3) < 30) {
+					int[] newGoalState = this.generateNewGoal();
+					population.resetGoal(newGoalState);
+					population.scatter();
+				}
+			});
+			
 		}
 		
 	
