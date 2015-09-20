@@ -4,6 +4,8 @@ import gaViz.main.BinaryStringHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,28 +14,29 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import pso.FitnessDistance;
+import pso.Particle;
 import pso.Population;
 import pso.Position;
 import pso.PsoConfigOptions;
+import pso.Velocity;
 
 public class PsoToFile {
 	
 	//private FitnessDistance fitnessFunction;
 	private int numPopulations = 4;
 	private int populationSize = 8;
-	private int numDimensions = 8;
-	private ArrayList<TempPsoPopulation> populations = new ArrayList<TempPsoPopulation>();
+	private int numDimensions = 12;
+	private ArrayList<PsoPopulationContainer> populations = new ArrayList<PsoPopulationContainer>();
 	private ArrayList<Population> activePopulations = new ArrayList<Population>();
 	private int size = 1000;
 	private ImageFromDesc imgDisplay;
 	
 	public PsoToFile () {
 		
-		Position size = new Position(new int[]{
-			this.size, this.size, this.size, 
-			this.size, this.size, this.size,
-			this.size, this.size
-		});
+		int[] searchSpace = new int[this.numDimensions];
+		Arrays.fill(searchSpace, this.size);
+		Position size = new Position(searchSpace);
+		
 		
 		//---POPULATION SETUP---//
 		for (int i = 0; i < this.numPopulations; i++) {
@@ -58,12 +61,12 @@ public class PsoToFile {
 		
 		for (int i = 0; i < 4000; i++) {
 			
-			this.populations.add(new TempPsoPopulation(this.activePopulations));
+			this.populations.add(new PsoPopulationContainer(this.activePopulations));
 			
 			this.activePopulations.stream().forEach(population -> {
 				population.update();
 				
-				if (population.getDimensionFitness(3) < 30) {
+				if (population.getDimensionFitness(6) < 30) {
 					int[] newGoalState = this.generateNewGoal();
 					population.resetGoal(newGoalState);
 					population.scatter();
@@ -142,6 +145,28 @@ public class PsoToFile {
 		
 		GenerationsNormal gensNormal = new GenerationsNormal(jsonPopulation);
 		this.imgDisplay = new ImageFromDesc(gensNormal, imgFormat);
+	}
+	
+	private class PsoPopulationContainer {
+		
+		private ArrayList<Particle> particles;
+		
+		public PsoPopulationContainer (List<Population> populations) {
+
+			this.particles = (ArrayList<Particle>) populations.stream()
+					.flatMap(population -> population.getParticles().stream())
+					.map(particle -> {
+						Position pos = new Position(particle.getPosition().getVector());
+						Velocity vel = new Velocity(particle.getVelocity().getVector());
+						return new Particle(pos, vel);
+					})
+					.collect(Collectors.toList());
+		}
+		
+		public ArrayList<Particle> getParticles () {
+			return this.particles;
+		}
+		
 	}
 	
 	public static void main (String[] args) {
