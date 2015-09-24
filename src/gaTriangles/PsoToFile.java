@@ -5,6 +5,7 @@ import gaViz.main.BinaryStringHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
@@ -25,11 +26,12 @@ public class PsoToFile {
 	//private FitnessDistance fitnessFunction;
 	private int numPopulations = 4;
 	private int populationSize = 8;
-	private int numDimensions = 12;
+	private int numDimensions = 8;
 	private ArrayList<PsoPopulationContainer> populations = new ArrayList<PsoPopulationContainer>();
 	private ArrayList<Population> activePopulations = new ArrayList<Population>();
 	private int size = 1000;
 	private ImageFromDesc imgDisplay;
+	private int[] activeDimension = new int[numDimensions];
 	
 	public PsoToFile () {
 		
@@ -37,6 +39,9 @@ public class PsoToFile {
 		Arrays.fill(searchSpace, this.size);
 		Position size = new Position(searchSpace);
 		
+		for (int i = 0; i < this.numDimensions; i++) {
+			activeDimension[i] = (int) Math.floor(this.numDimensions * Math.random());
+		}
 		
 		//---POPULATION SETUP---//
 		for (int i = 0; i < this.numPopulations; i++) {
@@ -63,14 +68,25 @@ public class PsoToFile {
 			
 			this.populations.add(new PsoPopulationContainer(this.activePopulations));
 			
+			AtomicInteger popIndex = new AtomicInteger(0);
 			this.activePopulations.stream().forEach(population -> {
 				population.update();
 				
-				if (population.getDimensionFitness(6) < 30) {
+				
+				//TODO: assign random dimension on each round
+				if (population.getDimensionFitness(popIndex.get()) < 30) {
+					//System.out.println("pop: " + popIndex.get() + " fitness: " + population.getDimensionFitness(11));
 					int[] newGoalState = this.generateNewGoal();
 					population.resetGoal(newGoalState);
+					//if (Math.random() < 0.6) {
+						population.scatter();
+					//}
+					activeDimension[popIndex.get()] = (int) Math.floor(this.numDimensions * Math.random());	
+				}
+				if (Math.random() < 0.001) {
 					population.scatter();
 				}
+				popIndex.getAndIncrement();
 			});
 			
 		}

@@ -1,0 +1,18 @@
+{
+	"filePath": "./files/models/1442727701170.json",
+	"bufferedImgWidth": 4000,
+	"bufferedImgHeight": 2000,
+	"displayWidth": 1200,
+	"displayHeight": 600,
+	"startIndex": 1150,
+	"endIndex": 4000,
+	"renderThresh": 0.7,
+	"xPosMult": 0.5,
+	"horizScale": 0.9,
+	"scaleMult": 1,
+	"alpha": 10,
+	"alphaJitter": 25,
+	"widthToScale": 160,
+	"vertScale": 0.4,
+	"scaleExp": 1.3
+}
