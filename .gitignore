@@ -6,10 +6,6 @@
 /files/logs/*
 
 
-/files/images/*
-!/files/images/1438793585183.png
-
-
 /files/thumbs/*
 !/files/thumbs/1435529169270.png
 
